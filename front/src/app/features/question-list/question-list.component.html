@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="page-header">
+    <h1>Minhas Questões</h1>
+    <a routerLink="/questions/new" class="btn btn--primary">+ Nova Questão</a>
+  </div>
+
+  @if (loading) {
+    <div class="loading">Carregando questões...</div>
+  } @else if (error) {
+    <div class="feedback feedback--incorrect">{{ error }}</div>
+  } @else if (questions.length === 0) {
+    <div class="empty-state">
+      <h2>Nenhuma questão criada ainda</h2>
+      <p>Crie sua primeira questão para começar a estudar!</p>
+      <a routerLink="/questions/new" class="btn btn--primary btn--lg">Criar primeira questão</a>
+    </div>
+  } @else {
+    <div class="question-grid">
+      @for (q of questions; track q.id) {
+        <div class="question-card">
+          <span class="badge" [class]="'badge--' + typeCss(q.type)">
+            {{ typeLabels[q.type] }}
+          </span>
+          <h2 class="question-card__title">{{ q.title }}</h2>
+          <span class="question-card__meta">
+            Criada em {{ q.createdAt | date:'dd/MM/yyyy' }}
+          </span>
+          <div class="question-card__actions">
+            <a [routerLink]="['/questions', q.id, 'answer']" class="btn btn--primary btn--sm">
+              Responder
+            </a>
+            <a [routerLink]="['/questions', q.id, 'edit']" class="btn btn--secondary btn--sm">
+              Editar
+            </a>
+            <button (click)="delete(q.id)" class="btn btn--danger btn--sm">
+              Excluir
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

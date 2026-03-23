@@ -1,0 +1,52 @@
+<div class="create-layout">
+  <div class="page-header">
+    <h1>{{ pageTitle }}</h1>
+    <a routerLink="/questions" class="btn btn--ghost btn--sm">← Voltar</a>
+  </div>
+
+  <!-- Enunciado -->
+  <div class="form-group">
+    <label for="title">Enunciado</label>
+    <textarea id="title" [(ngModel)]="title" rows="3"
+              placeholder="Digite o enunciado da questão..."></textarea>
+  </div>
+
+  <!-- Tipo -->
+  <div>
+    <div class="section-label">Tipo de questão</div>
+    <div class="type-grid">
+      @for (t of types; track t.value) {
+        <button class="type-btn" [class.active]="type === t.value"
+                (click)="onTypeChange(t.value)">
+          {{ t.label }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- Formulário específico por tipo -->
+  @switch (type) {
+    @case ('MULTIPLE_CHOICE') {
+      <app-multiple-choice-form [data]="data" (dataChange)="onDataChange($event)" />
+    }
+    @case ('DISCURSIVE') {
+      <app-discursive-form [data]="data" (dataChange)="onDataChange($event)" />
+    }
+    @case ('SORTING') {
+      <app-sorting-form [data]="data" (dataChange)="onDataChange($event)" />
+    }
+    @case ('MATCHING') {
+      <app-matching-form [data]="data" (dataChange)="onDataChange($event)" />
+    }
+    @case ('TABLE') {
+      <app-table-form [data]="data" (dataChange)="onDataChange($event)" />
+    }
+  }
+
+  <div class="form-footer">
+    <button class="btn btn--primary btn--lg" (click)="save()" [disabled]="saving">
+      {{ saving ? 'Salvando...' : 'Salvar Questão' }}
+    </button>
+    <a routerLink="/questions" class="btn btn--ghost btn--lg">Cancelar</a>
+  </div>
+</div>

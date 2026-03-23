@@ -1,0 +1,9 @@
+{
+  "name": "Angular Dev",
+  "image": "mcr.microsoft.com/devcontainers/node:20",
+  "forwardPorts": [4200],
+  "postCreateCommand": "npm install",
+  "remoteEnv": {
+    "NG_CLI_ANALYTICS": "false"
+  }
+}

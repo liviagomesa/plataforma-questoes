@@ -1,0 +1,69 @@
+<div class="answer-layout">
+  @if (loading) {
+    <div class="loading">Carregando questão...</div>
+  } @else if (!question) {
+    <div class="feedback feedback--incorrect">Questão não encontrada.</div>
+  } @else {
+    <div class="question-header">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span class="badge" [class]="'badge--' + typeCss(question.type)">
+          {{ typeLabels[question.type] }}
+        </span>
+        <a routerLink="/questions" class="btn btn--ghost btn--sm">← Voltar</a>
+      </div>
+      <h1 class="question-title">{{ question.title }}</h1>
+    </div>
+
+    <!-- Componente de resposta específico por tipo -->
+    @switch (question.type) {
+      @case ('MULTIPLE_CHOICE') {
+        <app-multiple-choice-answer [data]="question.data" />
+      }
+      @case ('DISCURSIVE') {
+        <app-discursive-answer [data]="question.data" />
+      }
+      @case ('SORTING') {
+        <app-sorting-answer [data]="question.data" />
+      }
+      @case ('MATCHING') {
+        <app-matching-answer [data]="question.data" />
+      }
+      @case ('TABLE') {
+        <app-table-answer [data]="question.data" />
+      }
+    }
+
+    <!-- Botões de ação -->
+    <div class="answer-actions">
+      @if (!result) {
+        <button class="btn btn--primary btn--lg" (click)="verify()">
+          Verificar resposta
+        </button>
+      } @else {
+        <button class="btn btn--ghost btn--lg" (click)="reset()">
+          Tentar novamente
+        </button>
+      }
+    </div>
+
+    <!-- Feedback -->
+    @if (result) {
+      @if (result.correct === true) {
+        <div class="feedback feedback--correct">
+          ✅ Correto! Muito bem!
+        </div>
+      } @else if (result.correct === false) {
+        <div class="feedback feedback--incorrect">
+          ❌ Incorreto. Revise e tente novamente.
+        </div>
+      } @else if (result.revealedAnswer) {
+        <div class="feedback feedback--reveal">
+          <div>
+            <strong>Resposta esperada:</strong>
+            <pre style="white-space: pre-wrap; margin-top: 0.5rem; font-family: inherit;">{{ result.revealedAnswer }}</pre>
+          </div>
+        </div>
+      }
+    }
+  }
+</div>
