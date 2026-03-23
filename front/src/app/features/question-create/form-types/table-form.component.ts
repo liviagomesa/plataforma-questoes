@@ -29,7 +29,7 @@ import { TableData } from '../../../core/models/question.model';
       <table class="edit-table">
         <thead>
           <tr>
-            @for (h of headers; track h; let c = $index) {
+            @for (c of colIndices; track c) {
               <th>
                 <input type="text" [(ngModel)]="headers[c]" (ngModelChange)="emit()"
                        [placeholder]="c === 0 ? 'Rótulo col.' : 'Header ' + c"
@@ -39,9 +39,9 @@ import { TableData } from '../../../core/models/question.model';
           </tr>
         </thead>
         <tbody>
-          @for (row of rows; track row; let r = $index) {
+          @for (r of rowIndices; track r) {
             <tr>
-              @for (cell of row; track cell; let c = $index) {
+              @for (c of colIndices; track c) {
                 <td [class.first-col]="c === 0">
                   <input type="text" [(ngModel)]="rows[r][c]" (ngModelChange)="emit()"
                          [placeholder]="c === 0 ? 'Rótulo linha ' + (r+1) : 'Valor'"
@@ -87,6 +87,9 @@ export class TableFormComponent implements OnInit {
   dataRows = 3;
   headers: string[] = [];
   rows: string[][] = [];
+
+  get colIndices(): number[] { return Array.from({ length: this.cols }, (_, i) => i); }
+  get rowIndices(): number[] { return Array.from({ length: this.dataRows }, (_, i) => i); }
 
   ngOnInit(): void {
     const d = this.data as Partial<TableData>;

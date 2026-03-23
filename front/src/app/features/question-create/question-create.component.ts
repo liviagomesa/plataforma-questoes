@@ -62,6 +62,13 @@ import { TableFormComponent } from './form-types/table-form.component';
       padding-top: 1.5rem;
       border-top: 1px solid var(--border);
     }
+    .comment-section {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #fefce8;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-sm);
+    }
   `]
 })
 export class QuestionCreateComponent implements OnInit {
@@ -69,6 +76,8 @@ export class QuestionCreateComponent implements OnInit {
   title = '';
   type: QuestionType = 'MULTIPLE_CHOICE';
   data: Record<string, unknown> = {};
+  successComment = '';
+  loaded = false;
   saving = false;
   pageTitle = 'Nova Questão';
 
@@ -94,7 +103,11 @@ export class QuestionCreateComponent implements OnInit {
         this.title = q.title;
         this.type = q.type;
         this.data = q.data as unknown as Record<string, unknown>;
+        this.successComment = (this.data['successComment'] as string) ?? '';
+        this.loaded = true;
       });
+    } else {
+      this.loaded = true;
     }
   }
 
@@ -110,7 +123,13 @@ export class QuestionCreateComponent implements OnInit {
   save(): void {
     if (!this.title.trim()) { alert('Informe o enunciado da questão.'); return; }
     this.saving = true;
-    const req = { title: this.title, type: this.type, data: this.data };
+    const data: Record<string, unknown> = { ...this.data };
+    if (this.successComment.trim()) {
+      data['successComment'] = this.successComment.trim();
+    } else {
+      delete data['successComment'];
+    }
+    const req = { title: this.title, type: this.type, data };
     const obs = this.id
       ? this.questionService.update(this.id, req)
       : this.questionService.create(req);

@@ -24,23 +24,32 @@
     </div>
   </div>
 
-  <!-- Formulário específico por tipo -->
-  @switch (type) {
-    @case ('MULTIPLE_CHOICE') {
-      <app-multiple-choice-form [data]="data" (dataChange)="onDataChange($event)" />
+  <!-- Formulário específico por tipo (aguarda carregamento em modo edição) -->
+  @if (loaded) {
+    @switch (type) {
+      @case ('MULTIPLE_CHOICE') {
+        <app-multiple-choice-form [data]="data" (dataChange)="onDataChange($event)" />
+      }
+      @case ('DISCURSIVE') {
+        <app-discursive-form [data]="data" (dataChange)="onDataChange($event)" />
+      }
+      @case ('SORTING') {
+        <app-sorting-form [data]="data" (dataChange)="onDataChange($event)" />
+      }
+      @case ('MATCHING') {
+        <app-matching-form [data]="data" (dataChange)="onDataChange($event)" />
+      }
+      @case ('TABLE') {
+        <app-table-form [data]="data" (dataChange)="onDataChange($event)" />
+      }
     }
-    @case ('DISCURSIVE') {
-      <app-discursive-form [data]="data" (dataChange)="onDataChange($event)" />
-    }
-    @case ('SORTING') {
-      <app-sorting-form [data]="data" (dataChange)="onDataChange($event)" />
-    }
-    @case ('MATCHING') {
-      <app-matching-form [data]="data" (dataChange)="onDataChange($event)" />
-    }
-    @case ('TABLE') {
-      <app-table-form [data]="data" (dataChange)="onDataChange($event)" />
-    }
+
+    <!-- Comentário de acerto -->
+    <div class="comment-section">
+      <div class="section-label">Comentário ao acertar (opcional)</div>
+      <textarea [(ngModel)]="successComment" rows="2"
+                placeholder="Exibido apenas quando o aluno acertar. Ex.: 'Lembre-se: REQUIRED reutiliza a transação existente.'"></textarea>
+    </div>
   }
 
   <div class="form-footer">

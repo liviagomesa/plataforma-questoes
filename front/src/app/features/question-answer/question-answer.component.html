@@ -52,6 +52,11 @@
         <div class="feedback feedback--correct">
           ✅ Correto! Muito bem!
         </div>
+        @if (successComment) {
+          <div class="feedback feedback--comment">
+            💡 {{ successComment }}
+          </div>
+        }
       } @else if (result.correct === false) {
         <div class="feedback feedback--incorrect">
           ❌ Incorreto. Revise e tente novamente.
@@ -63,6 +68,11 @@
             <pre style="white-space: pre-wrap; margin-top: 0.5rem; font-family: inherit;">{{ result.revealedAnswer }}</pre>
           </div>
         </div>
+        @if (successComment) {
+          <div class="feedback feedback--comment">
+            💡 {{ successComment }}
+          </div>
+        }
       }
     }
   }

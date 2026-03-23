@@ -42,6 +42,12 @@ export interface AnswerResult {
       flex-wrap: wrap;
     }
     .loading { text-align: center; padding: 3rem; color: var(--text-muted); }
+    :host ::ng-deep .feedback--comment {
+      margin-top: 0.5rem;
+      background: #fefce8;
+      border-color: #fde68a;
+      color: #713f12;
+    }
   `]
 })
 export class QuestionAnswerComponent implements OnInit {
@@ -83,6 +89,10 @@ export class QuestionAnswerComponent implements OnInit {
     const child = this.mcAnswer ?? this.discAnswer ?? this.sortAnswer
       ?? this.matchAnswer ?? this.tableAnswer;
     (child as { reset?: () => void })?.reset?.();
+  }
+
+  get successComment(): string {
+    return (this.question?.data as unknown as Record<string, unknown>)?.['successComment'] as string ?? '';
   }
 
   typeCss(type: string): string {
