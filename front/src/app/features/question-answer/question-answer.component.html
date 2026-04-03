@@ -19,6 +19,9 @@
       @case ('MULTIPLE_CHOICE') {
         <app-multiple-choice-answer [data]="question.data" />
       }
+      @case ('MULTIPLE_CORRECT') {
+        <app-multiple-correct-answer [data]="question.data" />
+      }
       @case ('DISCURSIVE') {
         <app-discursive-answer [data]="question.data" />
       }

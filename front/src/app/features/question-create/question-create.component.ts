@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { QuestionService } from '../../core/services/question.service';
 import { QuestionType } from '../../core/models/question.model';
 import { MultipleChoiceFormComponent } from './form-types/multiple-choice-form.component';
+import { MultipleCorrectFormComponent } from './form-types/multiple-correct-form.component';
 import { DiscursiveFormComponent } from './form-types/discursive-form.component';
 import { SortingFormComponent } from './form-types/sorting-form.component';
 import { MatchingFormComponent } from './form-types/matching-form.component';
@@ -14,7 +15,7 @@ import { TableFormComponent } from './form-types/table-form.component';
   standalone: true,
   imports: [
     FormsModule, RouterLink,
-    MultipleChoiceFormComponent, DiscursiveFormComponent,
+    MultipleChoiceFormComponent, MultipleCorrectFormComponent, DiscursiveFormComponent,
     SortingFormComponent, MatchingFormComponent, TableFormComponent
   ],
   templateUrl: './question-create.component.html',
@@ -83,6 +84,7 @@ export class QuestionCreateComponent implements OnInit {
 
   readonly types: { value: QuestionType; label: string }[] = [
     { value: 'MULTIPLE_CHOICE', label: 'Múltipla Escolha' },
+    { value: 'MULTIPLE_CORRECT', label: 'Múltipla Correta' },
     { value: 'DISCURSIVE', label: 'Discursiva' },
     { value: 'SORTING', label: 'Ordenação' },
     { value: 'MATCHING', label: 'Associação' },

@@ -30,6 +30,9 @@
       @case ('MULTIPLE_CHOICE') {
         <app-multiple-choice-form [data]="data" (dataChange)="onDataChange($event)" />
       }
+      @case ('MULTIPLE_CORRECT') {
+        <app-multiple-correct-form [data]="data" (dataChange)="onDataChange($event)" />
+      }
       @case ('DISCURSIVE') {
         <app-discursive-form [data]="data" (dataChange)="onDataChange($event)" />
       }

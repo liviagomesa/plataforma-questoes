@@ -3,6 +3,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { QuestionService } from '../../core/services/question.service';
 import { Question, TYPE_LABELS } from '../../core/models/question.model';
 import { MultipleChoiceAnswerComponent } from './answer-types/multiple-choice-answer.component';
+import { MultipleCorrectAnswerComponent } from './answer-types/multiple-correct-answer.component';
 import { DiscursiveAnswerComponent } from './answer-types/discursive-answer.component';
 import { SortingAnswerComponent } from './answer-types/sorting-answer.component';
 import { MatchingAnswerComponent } from './answer-types/matching-answer.component';
@@ -18,7 +19,7 @@ export interface AnswerResult {
   standalone: true,
   imports: [
     RouterLink,
-    MultipleChoiceAnswerComponent, DiscursiveAnswerComponent,
+    MultipleChoiceAnswerComponent, MultipleCorrectAnswerComponent, DiscursiveAnswerComponent,
     SortingAnswerComponent, MatchingAnswerComponent, TableAnswerComponent
   ],
   templateUrl: './question-answer.component.html',
@@ -57,6 +58,7 @@ export class QuestionAnswerComponent implements OnInit {
   readonly typeLabels = TYPE_LABELS;
 
   @ViewChild(MultipleChoiceAnswerComponent) mcAnswer?: MultipleChoiceAnswerComponent;
+  @ViewChild(MultipleCorrectAnswerComponent) mcCorrectAnswer?: MultipleCorrectAnswerComponent;
   @ViewChild(DiscursiveAnswerComponent) discAnswer?: DiscursiveAnswerComponent;
   @ViewChild(SortingAnswerComponent) sortAnswer?: SortingAnswerComponent;
   @ViewChild(MatchingAnswerComponent) matchAnswer?: MatchingAnswerComponent;
@@ -77,7 +79,7 @@ export class QuestionAnswerComponent implements OnInit {
 
   verify(): void {
     if (!this.question) return;
-    const child = this.mcAnswer ?? this.discAnswer ?? this.sortAnswer
+    const child = this.mcAnswer ?? this.mcCorrectAnswer ?? this.discAnswer ?? this.sortAnswer
       ?? this.matchAnswer ?? this.tableAnswer;
     if (child) {
       this.result = child.verify();
@@ -86,7 +88,7 @@ export class QuestionAnswerComponent implements OnInit {
 
   reset(): void {
     this.result = undefined;
-    const child = this.mcAnswer ?? this.discAnswer ?? this.sortAnswer
+    const child = this.mcAnswer ?? this.mcCorrectAnswer ?? this.discAnswer ?? this.sortAnswer
       ?? this.matchAnswer ?? this.tableAnswer;
     (child as { reset?: () => void })?.reset?.();
   }

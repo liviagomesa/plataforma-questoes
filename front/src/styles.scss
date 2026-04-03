@@ -183,7 +183,8 @@ textarea {
   text-transform: uppercase;
 }
 
-.badge--multiple_choice { background: #dbeafe; color: #1d4ed8; }
+.badge--multiple_choice   { background: #dbeafe; color: #1d4ed8; }
+.badge--multiple_correct  { background: #e0f2fe; color: #0369a1; }
 .badge--discursive      { background: #f3e8ff; color: #7c3aed; }
 .badge--sorting         { background: #fef3c7; color: #b45309; }
 .badge--matching        { background: #dcfce7; color: #15803d; }
@@ -217,6 +218,13 @@ textarea {
     background: #f0f9ff;
     color: #0369a1;
     border: 1px solid #bae6fd;
+  }
+
+  &--comment {
+    background: #fefce8;
+    color: #713f12;
+    border: 1px solid #fde68a;
+    white-space: pre-wrap;
   }
 }
 

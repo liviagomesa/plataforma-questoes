@@ -1,10 +1,10 @@
-export type QuestionType = 'MULTIPLE_CHOICE' | 'DISCURSIVE' | 'SORTING' | 'MATCHING' | 'TABLE';
+export type QuestionType = 'MULTIPLE_CHOICE' | 'MULTIPLE_CORRECT' | 'DISCURSIVE' | 'SORTING' | 'MATCHING' | 'TABLE';
 
 export interface Question {
   id: string;
   title: string;
   type: QuestionType;
-  data: MultipleChoiceData | DiscursiveData | SortingData | MatchingData | TableData;
+  data: MultipleChoiceData | MultipleCorrectData | DiscursiveData | SortingData | MatchingData | TableData;
   createdAt: string;
 }
 
@@ -16,6 +16,11 @@ export interface Option {
 export interface MultipleChoiceData {
   options: Option[];
   correctId: string;
+}
+
+export interface MultipleCorrectData {
+  options: Option[];
+  correctIds: string[];
 }
 
 export interface DiscursiveData {
@@ -49,6 +54,7 @@ export interface TableData {
 
 export const TYPE_LABELS: Record<QuestionType, string> = {
   MULTIPLE_CHOICE: 'Múltipla Escolha',
+  MULTIPLE_CORRECT: 'Múltipla Correta',
   DISCURSIVE: 'Discursiva',
   SORTING: 'Ordenação',
   MATCHING: 'Associação',
